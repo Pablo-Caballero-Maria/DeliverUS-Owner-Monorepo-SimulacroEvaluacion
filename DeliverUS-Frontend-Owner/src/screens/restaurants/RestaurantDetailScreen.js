@@ -15,6 +15,7 @@ import defaultProductImage from '../../../assets/product.jpeg'
 export default function RestaurantDetailScreen ({ navigation, route }) {
   const [restaurant, setRestaurant] = useState({})
   const [productToBeDeleted, setProductToBeDeleted] = useState(null)
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
     fetchRestaurantDetail()
@@ -119,6 +120,10 @@ export default function RestaurantDetailScreen ({ navigation, route }) {
     try {
       const fetchedRestaurant = await getDetail(route.params.id)
       setRestaurant(fetchedRestaurant)
+      if (fetchedRestaurant.sorted) {
+        fetchedRestaurant.products.sort((a, b) => a.price - b.price)
+      }
+      setProducts(fetchedRestaurant.products)
     } catch (error) {
       showMessage({
         message: `There was an error while retrieving restaurant details (id ${route.params.id}). ${error}`,
@@ -151,14 +156,13 @@ export default function RestaurantDetailScreen ({ navigation, route }) {
       })
     }
   }
-
   return (
     <View style={styles.container}>
       <FlatList
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmptyProductsList}
         style={styles.container}
-        data={restaurant.products}
+        data={products} // he ordenado la data directamente
         renderItem={renderProduct}
         keyExtractor={item => item.id.toString()}
       />

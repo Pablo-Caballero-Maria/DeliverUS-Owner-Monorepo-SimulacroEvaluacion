@@ -26,10 +26,10 @@ exports.show = async function (req, res) {
   try {
     const product = await Product.findByPk(req.params.productId, {
       include: [
-      {
-        model: ProductCategory,
-        as: 'productCategory'
-      }]
+        {
+          model: ProductCategory,
+          as: 'productCategory'
+        }]
     }
     )
     res.json(product)
@@ -44,10 +44,45 @@ exports.create = async function (req, res) {
     newProduct.image = req.file.destination + '/' + req.file.filename
   }
   try {
+    /* const avgProductsPriceOthers = await Restaurant.findAll(
+      {
+        where: { id: { [Sequelize.Op.ne]: req.body.restaurantId } },
+        include: // este include es como un join
+          {
+            model: Product,
+            as: 'products'
+          },
+        attributes: [
+          [Sequelize.fn('AVG', Sequelize.col('price')), 'avgProductsPrice']
+        ]
+      }
+    )
+
+    const avgProductsPriceSelf = await Restaurant.findAll(
+      {
+        where: { id: req.body.restaurantId },
+        include:
+          {
+            model: Product,
+            as: 'products'
+          },
+        attributes: [
+          [Sequelize.fn('AVG', Sequelize.col('price')), 'avgProductsPrice']
+        ]
+      }
+    )
+
+    const isEchonomic = avgProductsPriceSelf[0].dataValues.avgProductsPrice < avgProductsPriceOthers[0].dataValues.avgProductsPrice
+    const restaurant = await Restaurant.findByPk(req.body.restaurantId)
+    restaurant.echonomic = isEchonomic
+    await Restaurant.update(
+      { echonomic: isEchonomic },
+      { where: { id: req.body.restaurantId }, fields: ['echonomic'] }
+    ) */
     newProduct = await newProduct.save()
     res.json(newProduct)
   } catch (err) {
-      res.status(500).send(err)
+    res.status(500).send(err)
   }
 }
 

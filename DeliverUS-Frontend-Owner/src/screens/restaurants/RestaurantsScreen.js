@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, FlatList, Pressable, View } from 'react-native'
+import { StyleSheet, FlatList, Pressable, View, Switch } from 'react-native'
 
-import { getAll, remove } from '../../api/RestaurantEndpoints'
+import { getAll, getDetail, remove, update } from '../../api/RestaurantEndpoints'
 import ImageCard from '../../components/ImageCard'
 import TextSemiBold from '../../components/TextSemibold'
 import TextRegular from '../../components/TextRegular'
@@ -24,15 +24,16 @@ export default function RestaurantsScreen ({ navigation, route }) {
     } else {
       setRestaurants(null)
     }
-  }, [loggedInUser, route])
+  }, [loggedInUser, route, restaurants]) // actualizar lista restaurantes
 
   const renderRestaurant = ({ item }) => {
     return (
+      <View>
       <ImageCard
         imageUri={item.logo ? { uri: process.env.API_BASE_URL + '/' + item.logo } : restaurantLogo}
         title={item.name}
         onPress={() => {
-          navigation.navigate('RestaurantDetailScreen', { id: item.id })
+          navigation.navigate('RestaurantDetailScreen', { id: item.id, sort: item.sorted })
         }}
       >
         <TextRegular numberOfLines={2}>{item.description}</TextRegular>
@@ -76,10 +77,32 @@ export default function RestaurantsScreen ({ navigation, route }) {
               Delete
             </TextRegular>
           </View>
-        </Pressable>
+          </Pressable>
+          <TextSemiBold>
+              SORT BY PRICE
+            </TextSemiBold>
         </View>
-      </ImageCard>
+        </ImageCard>
+
+      <Switch
+      trackColor={{ false: GlobalStyles.brandSecondary, true: GlobalStyles.brandPrimary }}
+      thumbColor={'#f4f3f4'}
+      value={item.sorted} // esto es el valor que tiene por defecto
+      style={styles.switch}
+      onValueChange={value => {
+        // actualizar propiedad sorted de restaurant
+        updateSorted(item.id, value)
+      }
+      }
+        />
+      </View>
     )
+  }
+
+  const updateSorted = async (restaurantId, newSorted) => {
+    const restaurant = await getDetail(restaurantId)
+    const newRestaurant = { name: restaurant.name, sorted: newSorted, description: restaurant.description, address: restaurant.address, postalCode: restaurant.postalCode, url: restaurant.url, email: restaurant.email, phone: restaurant.phone, shippingCosts: restaurant.shippingCosts, restaurantCategoryId: restaurant.restaurantCategoryId }
+    await update(restaurantId, newRestaurant)
   }
 
   const renderEmptyRestaurantsList = () => {
@@ -175,6 +198,10 @@ export default function RestaurantsScreen ({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  switch: {
+    marginTop: -40,
+    marginLeft: 930
+  },
   container: {
     flex: 1
   },
@@ -195,7 +222,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: 'center',
     flexDirection: 'column',
-    width: '50%'
+    width: '33%'
   },
   actionButtonsContainer: {
     flexDirection: 'row',

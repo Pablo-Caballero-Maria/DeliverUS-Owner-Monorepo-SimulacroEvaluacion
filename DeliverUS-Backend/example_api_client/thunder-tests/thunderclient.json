@@ -269,60 +269,13 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2021-07-25T08:18:17.296Z",
-    "modified": "2023-01-29T17:19:55.480Z",
+    "modified": "2023-05-21T12:31:10.661Z",
     "headers": [],
     "params": [],
     "body": {
-      "type": "formdata",
-      "raw": "",
-      "form": [
-        {
-          "name": "name",
-          "value": "Bodeguita Antonio Romero"
-        },
-        {
-          "name": "description",
-          "value": "Comida Sevillana"
-        },
-        {
-          "name": "address",
-          "value": "Calle Antonia Díaz, 19"
-        },
-        {
-          "name": "postalCode",
-          "value": "41001"
-        },
-        {
-          "name": "url",
-          "value": "http://www.bodeguitasantonioromero.com/"
-        },
-        {
-          "name": "email",
-          "value": "info@bodeguitasantonioromero.com"
-        },
-        {
-          "name": "phone",
-          "value": "+34654223939"
-        },
-        {
-          "name": "shippingCosts",
-          "value": "3.5"
-        },
-        {
-          "name": "restaurantCategoryId",
-          "value": "1"
-        }
-      ],
-      "files": [
-        {
-          "name": "logo",
-          "value": "../example_assets/logo.jpeg"
-        },
-        {
-          "name": "heroImage",
-          "value": "../example_assets/heroImage.jpg"
-        }
-      ]
+      "type": "json",
+      "raw": "{\n  \"name\": \"Bodeguita Antonio Romero\",\n  \"description\": \"Comida Sevillana\",\n  \"address\": \"Calle Antonia Díaz, 19\",\n  \"postalCode\": \"41001\",\n  \"url\": \"http://www.bodeguitasantonioromero.com/\",\n  \"email\": \"info@bodeguitasantonioromero.com\",\n  \"phone\": \"+34654223939\",\n  \"shippingCosts\": 35,\n  \"restaurantCategoryId\": 1,\n  \"heroImage\": \"public/restaurants/y69vh-1684672213421.jpg\",\n  \"logo\": \"public/restaurants/qg6gye-1684672213419.jpeg\"\n}",
+      "form": []
     },
     "auth": {
       "type": "bearer",
@@ -585,48 +538,13 @@
     "method": "POST",
     "sortNum": 130000,
     "created": "2021-07-25T08:18:17.296Z",
-    "modified": "2021-08-04T15:07:05.127Z",
+    "modified": "2023-05-21T12:29:58.494Z",
     "headers": [],
     "params": [],
     "body": {
-      "type": "formdata",
-      "raw": "",
-      "form": [
-        {
-          "name": "name",
-          "value": "Paella"
-        },
-        {
-          "name": "description",
-          "value": "de marisco"
-        },
-        {
-          "name": "price",
-          "value": "5"
-        },
-        {
-          "name": "order",
-          "value": "4"
-        },
-        {
-          "name": "availability",
-          "value": "true"
-        },
-        {
-          "name": "restaurantId",
-          "value": "1"
-        },
-        {
-          "name": "productCategoryId",
-          "value": "4"
-        }
-      ],
-      "files": [
-        {
-          "name": "image",
-          "value": "../example_assets/paella.jpeg"
-        }
-      ]
+      "type": "json",
+      "raw": "{\n  \"name\": \"Paella\",\n  \"description\": \"de marisco\",\n  \"price\": 500,\n  \"order\": 4,\n  \"availability\": true,\n  \"restaurantId\": 1,\n  \"productCategoryId\": 4,\n  \"image\": \"public/restaurants/products/8tzql-1684672142073.jpeg\"\n}",
+      "form": []
     },
     "auth": {
       "type": "bearer",

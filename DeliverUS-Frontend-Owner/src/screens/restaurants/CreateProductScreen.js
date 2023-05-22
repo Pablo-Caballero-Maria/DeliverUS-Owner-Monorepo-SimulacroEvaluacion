@@ -82,6 +82,7 @@ export default function CreateProductScreen ({ navigation, route }) {
     setBackendErrors([])
     try {
       const createdProduct = await create(values)
+      console.log(createdProduct)
       showMessage({
         message: `Product ${createdProduct.name} succesfully created`,
         type: 'success',

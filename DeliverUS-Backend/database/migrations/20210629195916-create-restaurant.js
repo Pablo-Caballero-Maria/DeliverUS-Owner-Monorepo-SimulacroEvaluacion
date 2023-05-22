@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      
+      sorted: {
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING

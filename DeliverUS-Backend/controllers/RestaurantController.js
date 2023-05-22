@@ -9,7 +9,7 @@ exports.index = async function (req, res) {
   try {
     const restaurants = await Restaurant.findAll(
       {
-        attributes: ['id', 'name', 'description', 'address', 'postalCode', 'url', 'shippingCosts', 'averageServiceMinutes', 'email', 'phone', 'logo', 'heroImage', 'status', 'restaurantCategoryId'],
+        attributes: ['id', 'name', 'sorted', 'description', 'address', 'postalCode', 'url', 'shippingCosts', 'averageServiceMinutes', 'email', 'phone', 'logo', 'heroImage', 'status', 'restaurantCategoryId'],
         include:
       {
         model: RestaurantCategory,
@@ -28,7 +28,7 @@ exports.indexOwner = async function (req, res) {
   try {
     const restaurants = await Restaurant.findAll(
       {
-        attributes: ['id', 'name', 'description', 'address', 'postalCode', 'url', 'shippingCosts', 'averageServiceMinutes', 'email', 'phone', 'logo', 'heroImage', 'status', 'restaurantCategoryId'],
+        attributes: ['id', 'name', 'sorted', 'description', 'address', 'postalCode', 'url', 'shippingCosts', 'averageServiceMinutes', 'email', 'phone', 'logo', 'heroImage', 'status', 'restaurantCategoryId'],
         where: { userId: req.user.id }
       })
     res.json(restaurants)
@@ -51,7 +51,7 @@ exports.create = async function (req, res) {
     const restaurant = await newRestaurant.save()
     res.json(restaurant)
   } catch (err) {
-      res.status(500).send(err)
+    res.status(500).send(err)
   }
 }
 
@@ -69,9 +69,11 @@ exports.show = async function (req, res) {
         model: RestaurantCategory,
         as: 'restaurantCategory'
       }],
-      order: [[{model:Product, as: 'products'}, 'order', 'ASC']],
+      // si sorted es false o undefined ordena por order, y si es true ordena por price
+      order: [[{ model: Product, as: 'products' }, req.body.sorted === true ? 'price' : 'order', 'ASC']]
     }
     )
+    console.log(req.body.sorted)
     res.json(restaurant)
   } catch (err) {
     res.status(500).send(err)

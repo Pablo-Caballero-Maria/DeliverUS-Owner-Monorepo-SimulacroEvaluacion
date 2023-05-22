@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Restaurant.init({
     name: DataTypes.STRING,
+    sorted: DataTypes.BOOLEAN,
     description: DataTypes.TEXT,
     address: DataTypes.STRING,
     postalCode: DataTypes.STRING,
